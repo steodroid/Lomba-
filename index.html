@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+<title>Timeline Lomba Esai 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: satu kolom lebar baca, kalender mingguan sebagai tulang punggung, lomba diberi kode warna konsisten */
+:root{
+  --bg:#f2f4f6; --surface:#ffffff; --ink:#15202b; --muted:#5a6774; --line:#d9e0e6; --soft:#e9edf1;
+  --accent:#1d5bb8;
+  --uiso:#0b8174; --egsa:#3a7a23; --gen:#7446bf; --nesta:#c4600c; --all:#4b5866;
+  --hard:#b8322a; --hard-bg:#fbeceb; --cond-bg:#f4f0fb; --done:#8a96a3;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141a; --surface:#161f28; --ink:#e5ebf1; --muted:#9aa7b4; --line:#2a3644; --soft:#1d2833;
+  --accent:#74a6ff; --uiso:#3cc4b3; --egsa:#7dc463; --gen:#ad8cf0; --nesta:#f29a52; --all:#a3b0bd;
+  --hard:#ff7d72; --hard-bg:#3a1d1c; --cond-bg:#241e33; --done:#6b7784; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141a; --surface:#161f28; --ink:#e5ebf1; --muted:#9aa7b4; --line:#2a3644; --soft:#1d2833;
+  --accent:#74a6ff; --uiso:#3cc4b3; --egsa:#7dc463; --gen:#ad8cf0; --nesta:#f29a52; --all:#a3b0bd;
+  --hard:#ff7d72; --hard-bg:#3a1d1c; --cond-bg:#241e33; --done:#6b7784; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(30px,5.5vw,48px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(22px,3.4vw,28px);font-weight:800}
+h3{font-size:18px;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+section{display:flex;flex-direction:column;gap:16px}
+.lede{max-width:66ch;color:var(--muted)}
+
+/* header */
+header{display:flex;flex-direction:column;gap:14px}
+.status{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat b{font-family:var(--f-mono);font-size:20px;font-variant-numeric:tabular-nums}
+.stat.next{border-color:var(--hard)}
+.stat.next b{color:var(--hard)}
+.bar{height:8px;border-radius:99px;background:var(--soft);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.sync{font-size:13px}
+
+/* lomba cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{color:var(--c)}
+.card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:14px}
+.card dt{color:var(--muted)}
+.card dd{margin:0;min-width:0}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.04em;padding:2px 7px;border-radius:4px;color:var(--c);border:1px solid var(--c);white-space:nowrap}
+.c-UISO{--c:var(--uiso)} .c-EGSA{--c:var(--egsa)} .c-GEN{--c:var(--gen)} .c-NESTA{--c:var(--nesta)} .c-ALL{--c:var(--all)}
+
+/* warnings */
+.warns{display:grid;gap:10px}
+.warn{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px;display:grid;grid-template-columns:28px 1fr;gap:4px 12px}
+.warn .n{font-family:var(--f-mono);font-weight:700;color:var(--hard)}
+.warn.mid .n{color:var(--accent)}
+.warn p{grid-column:2;font-size:15px;color:var(--muted)}
+.warn h3{font-size:16px}
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:99px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible,.task input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+/* timeline */
+.week{display:grid;grid-template-columns:150px 1fr;gap:16px;padding-top:18px;border-top:1px solid var(--line)}
+.week-head{display:flex;flex-direction:column;gap:4px}
+.week-head .eyebrow{color:var(--accent)}
+.week-head h3{font-size:17px}
+.week.now .week-head .eyebrow::after{content:" · minggu ini";color:var(--hard)}
+.tasks{display:flex;flex-direction:column;gap:6px;min-width:0}
+.task{display:grid;grid-template-columns:22px 92px 1fr;gap:4px 10px;align-items:start;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:8px;padding:9px 12px}
+.task input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent);cursor:pointer}
+.task .date{font-family:var(--f-mono);font-size:13px;color:var(--muted);padding-top:1px}
+.task .body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.task .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.who{font-size:12px;font-weight:700;color:var(--muted)}
+.who.p{color:var(--accent)}
+.task.hard{background:var(--hard-bg);border-color:var(--hard);border-left-color:var(--hard)}
+.task.hard .txt{font-weight:700}
+.task.cond{background:var(--cond-bg)}
+.flag{font-family:var(--f-mono);font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px}
+.flag.h{background:var(--hard);color:var(--surface)}
+.flag.c{border:1px dashed var(--gen);color:var(--gen)}
+.flag.late{border:1px solid var(--hard);color:var(--hard)}
+.task.done .txt{text-decoration:line-through;color:var(--done)}
+.task.today{box-shadow:0 0 0 2px var(--accent)}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.box ol,.box ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.copy{display:flex;flex-direction:column;gap:8px}
+.copy pre{margin:0;white-space:pre-wrap;font-family:var(--f-body);font-size:14.5px;background:var(--soft);border-radius:8px;padding:12px;border:1px solid var(--line)}
+.btn{font:inherit;font-size:14px;font-weight:600;align-self:flex-start;background:var(--ink);color:var(--bg);border:0;border-radius:6px;padding:6px 14px;cursor:pointer}
+.qs{columns:2;column-gap:24px;margin:0;padding-left:20px}
+.qs li{break-inside:avoid;margin-bottom:8px}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+
+@media (max-width:700px){
+  .week{grid-template-columns:1fr;gap:8px}
+  .task{grid-template-columns:22px 1fr}
+  .task .date{grid-column:2}
+  .task .body{grid-column:2}
+  .two{grid-template-columns:1fr}
+  .qs{columns:1}
+}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Rencana kerja · 19 Oktober – 29 November 2026</span>
+  <h1>Timeline Lomba Esai 2026</h1>
+  <p class="lede">Empat lomba dalam enam minggu: UI Science Olympiad (esai sudah terkirim), EGSA UGM, GENMATCH, dan NESTA. Halaman ini dipakai bersama oleh siswa dan guru pembina. Centang tugas yang selesai; tugas bertanda <b>jika lolos</b> hanya dikerjakan kalau lolos ke final.</p>
+  <div class="status">
+    <div class="stat"><span class="eyebrow">Hari ini</span><b id="today">–</b></div>
+    <div class="stat next"><span class="eyebrow">Deadline terdekat</span><b id="nextDl">–</b><span id="nextDlName" class="muted" style="font-size:13px"></span></div>
+    <div class="stat" style="flex:1;min-width:220px"><span class="eyebrow">Progres tugas</span><b id="prog">0 / 0</b><div class="bar"><i id="progBar"></i></div><span id="sync" class="sync muted">Centang tersimpan di perangkat ini.</span></div>
+  </div>
+</header>
+
+<section>
+  <h2>Empat lomba, sekilas</h2>
+  <div class="cards">
+    <article class="card c-UISO">
+      <h3>UI Science Olympiad</h3>
+      <span class="tag">ESAI SUDAH TERKIRIM</span>
+      <dl>
+        <dt>Finalis</dt><dd class="mono">31 Okt</dd>
+        <dt>Daftar ulang</dt><dd><span class="mono">31 Okt–3 Nov</span>, Rp125.000</dd>
+        <dt>TM 2</dt><dd class="mono">7 Nov (Zoom)</dd>
+        <dt>Setor PPT</dt><dd><span class="mono">20 Nov 23.59</span>, PDF, sekali unggah</dd>
+        <dt>Final</dt><dd><span class="mono">27 Nov</span>, luring FMIPA UI, 15 mnt + 15 mnt tanya jawab</dd>
+        <dt>Awarding</dt><dd class="mono">29 Nov (luring)</dd>
+      </dl>
+    </article>
+    <article class="card c-EGSA">
+      <h3>EGSA UGM (EIC)</h3>
+      <span class="tag">FOOD, WATER, ENERGY &amp; NR</span>
+      <dl>
+        <dt>Kirim esai</dt><dd><span class="mono">28 Okt</span>, PDF ≤10 MB</dd>
+        <dt>Panjang</dt><dd>maks. 10 halaman isi</dd>
+        <dt>Wajib</dt><dd>Turnitin ≤15%, cover &amp; lembar orisinalitas panitia</dd>
+        <dt>Biaya</dt><dd>Rp60.000/tim</dd>
+        <dt>Finalis</dt><dd><span class="mono">13 Nov</span> (5 tim)</dd>
+        <dt>Final</dt><dd><span class="mono">21 Nov</span>, daring MS Teams</dd>
+      </dl>
+    </article>
+    <article class="card c-GEN">
+      <h3>GENMATCH</h3>
+      <span class="tag">CIRCULAR ECONOMY &amp; WASTE</span>
+      <dl>
+        <dt>Kirim esai</dt><dd><span class="mono">31 Okt</span>, PDF</dd>
+        <dt>Panjang</dt><dd>1.000–1.500 kata</dd>
+        <dt>Margin</dt><dd>3-3-3-3 cm</dd>
+        <dt>Finalis</dt><dd class="mono">3 Nov</dd>
+        <dt>TM</dt><dd class="mono">4 Nov (daring)</dd>
+        <dt>Final</dt><dd><span class="mono">8 Nov</span>, daring</dd>
+        <dt>Awarding</dt><dd><span class="mono">14 Nov</span>, luring ITS</dd>
+      </dl>
+    </article>
+    <article class="card c-NESTA">
+      <h3>NESTA</h3>
+      <span class="tag">CIRCULAR ECONOMY</span>
+      <dl>
+        <dt>Daftar</dt><dd>Gel. 1 s.d. <span class="mono">31 Okt</span> (Rp50.000), gel. 2 s.d. <span class="mono">14 Nov</span> (Rp75.000)</dd>
+        <dt>Kirim esai</dt><dd><span class="mono">15 Nov</span>, file .docx</dd>
+        <dt>Panjang</dt><dd>3–5 halaman di luar judul &amp; dapus</dd>
+        <dt>Finalis</dt><dd><span class="mono">19 Nov</span> (20 finalis)</dd>
+        <dt>TM</dt><dd class="mono">22 Nov</dd>
+        <dt>Final</dt><dd><span class="mono">29 Nov</span>, daring</dd>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<section>
+  <h2>Yang harus diwaspadai</h2>
+  <div class="warns">
+    <div class="warn"><span class="n">01</span><h3>29 November bentrok: awarding UISO (luring di UI) dan final NESTA (daring)</h3>
+      <p>Kalau lolos keduanya, presentasi NESTA dilakukan dari Depok. Saat TM NESTA 22 Nov, tanyakan jam presentasi dan minta slot yang tidak bertabrakan dengan Grand Closing UISO. Bawa laptop, charger, dan hotspot cadangan.</p></div>
+    <div class="warn"><span class="n">02</span><h3>NESTA dan GENMATCH sama-sama ekonomi sirkular</h3>
+      <p>NESTA melarang karya yang pernah dipakai di lomba lain, dan kedua lomba mewajibkan orisinalitas. Kerangka presentasinya boleh sama, tapi masalah, sasaran, lokasi, dan solusinya harus berbeda, dan tidak boleh ada paragraf yang dipakai ulang. Lihat bagian "Beda isi, sama kerangka" di bawah.</p></div>
+    <div class="warn"><span class="n">03</span><h3>EGSA wajib lampiran Turnitin ≤15%</h3>
+      <p>Akses Turnitin biasanya lewat sekolah, perpustakaan, atau guru. Urus mulai hari ini; hasilnya harus sudah ada paling lambat 27 Okt.</p></div>
+    <div class="warn"><span class="n">04</span><h3>Aturan AI dan bantuan orang lain</h3>
+      <p>EGSA dan GENMATCH hanya membolehkan AI sebagai alat bantu terbatas; ide, analisis, dan tulisan harus dari peserta. UISO mendiskualifikasi peserta yang "digantikan/dibantu oleh orang lain". Guru pembina memberi masukan, bukan menulis.</p></div>
+    <div class="warn mid"><span class="n">05</span><h3>Final UISO luring di Depok, 27–29 Nov</h3>
+      <p>Perlu izin orang tua, surat dispensasi sekolah, biaya daftar ulang Rp125.000, dan akomodasi opsional (Rp620.000–720.000). Cek juga apakah tanggal ini bentrok dengan ujian akhir semester. Kalau lolos final di lebih dari satu cabang UISO, wajib pilih satu.</p></div>
+    <div class="warn mid"><span class="n">06</span><h3>Sekali unggah, tanpa revisi</h3>
+      <p>Esai dan PPT UISO hanya bisa diunggah sekali. Semua lomba di sini dijadwalkan terkirim H-1 sebagai cadangan kalau situs error.</p></div>
+    <div class="warn mid"><span class="n">07</span><h3>Hal di guidebook yang perlu dikonfirmasi ke panitia</h3>
+      <p>GENMATCH: presentasi disebut "tim 2 peserta". Kalau ikut sendiri, tanyakan ke CP apakah boleh presentasi sendiri. Belum jelas juga apakah awarding luring di ITS wajib dihadiri. NESTA menyebut "enam subtema" tapi hanya mencantumkan lima; ekonomi sirkular tetap aman.</p></div>
+  </div>
+</section>
+
+<section id="timeline">
+  <h2>Jadwal per minggu</h2>
+  <div class="filters" role="group" aria-label="Saring tugas">
+    <button class="chip" data-f="ALL" aria-pressed="true">Semua</button>
+    <button class="chip" data-f="UISO" aria-pressed="false">UISO</button>
+    <button class="chip" data-f="EGSA" aria-pressed="false">EGSA</button>
+    <button class="chip" data-f="GEN" aria-pressed="false">GENMATCH</button>
+    <button class="chip" data-f="NESTA" aria-pressed="false">NESTA</button>
+    <button class="chip" data-f="P" aria-pressed="false">Tugas pembina</button>
+    <button class="chip" id="hideDone" aria-pressed="false">Sembunyikan yang selesai</button>
+  </div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--hard)"></i>Deadline mati</span>
+    <span><i class="sw" style="background:var(--cond-bg);border:1px dashed var(--gen)"></i>Jika lolos</span>
+    <span><i class="sw" style="background:var(--accent)"></i>Bimbingan/pembina</span>
+  </div>
+  <div id="weeks"></div>
+</section>
+
+<section>
+  <h2>Jadwal bimbingan dengan guru pembina</h2>
+  <p class="lede">Tujuh pertemuan pendek (30–45 menit). Draf selalu dikirim minimal sehari sebelumnya, supaya pertemuan dipakai untuk membahas revisi, bukan membaca.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Sesi</th><th>Tanggal</th><th>Kirim sebelumnya</th><th>Yang dibahas</th></tr></thead>
+    <tbody>
+      <tr><td class="num">B1</td><td class="num">Rab 21 Okt</td><td>Outline EGSA + ide GENMATCH (1 halaman)</td><td>Apakah masalahnya cukup spesifik dan datanya ada? Akses Turnitin. Info awal soal dispensasi UISO.</td></tr>
+      <tr><td class="num">B2</td><td class="num">Sen 26 Okt</td><td>Draf lengkap EGSA (Sab 24 Okt)</td><td>Logika argumen, kekuatan data, bagian GeoAI, format.</td></tr>
+      <tr><td class="num">B3</td><td class="num">Kam 29 Okt</td><td>Draf lengkap GENMATCH (Rab 28 Okt)</td><td>Orisinalitas solusi, kelayakan, kaitan ke SDGs.</td></tr>
+      <tr><td class="num">B4</td><td class="num">Rab 4 Nov</td><td>Outline NESTA; deck GENMATCH jika lolos</td><td>Pastikan NESTA beda dari GENMATCH. Surat dispensasi dan izin UISO.</td></tr>
+      <tr><td class="num">B5</td><td class="num">Kam 12 Nov</td><td>Draf NESTA + draf PPT UISO (Rab 11 Nov)</td><td>Revisi NESTA; alur dan isi slide UISO.</td></tr>
+      <tr><td class="num">B6</td><td class="num">Rab 18 Nov</td><td>PPT UISO hampir final</td><td>Simulasi juri UISO penuh (15 + 15 menit); jalankan deck EGSA jika lolos.</td></tr>
+      <tr><td class="num">B7</td><td class="num">Rab 25 Nov</td><td>—</td><td>Gladi bersih UISO dan NESTA.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="two">
+    <div class="box copy">
+      <h3>Template pesan minta revisi</h3>
+      <pre id="msg1">Assalamualaikum/Selamat siang, Bu/Pak. Saya kirim draf esai [NAMA LOMBA] untuk bimbingan [HARI, TANGGAL]. Deadline lombanya [TANGGAL].
+Mohon masukan terutama untuk:
+1. [mis. apakah data di paragraf 3 cukup kuat]
+2. [mis. apakah solusinya realistis untuk diterapkan di sekolah/daerah]
+3. [mis. bagian penutup terasa lemah]
+Terima kasih, Bu/Pak.</pre>
+      <button class="btn" data-copy="msg1">Salin pesan</button>
+    </div>
+    <div class="box">
+      <h3>Minta tolong ke pembina/sekolah</h3>
+      <ul>
+        <li>Akses Turnitin untuk EGSA (≤15%) dan cek kemiripan NESTA.</li>
+        <li>Surat dispensasi/surat tugas untuk final UISO 26–29 Nov dan untuk jam presentasi daring (8, 21, 29 Nov) kalau jatuh di jam sekolah.</li>
+        <li>Bantu bicara dengan orang tua soal biaya dan perjalanan ke Depok.</li>
+        <li>Jadi "juri galak" di sesi simulasi B6 dan B7.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Beda isi, sama kerangka</h2>
+  <p class="lede">Supaya presentasi gampang dihafal, keempat lomba memakai urutan slide yang sama. Yang membuat esainya tetap orisinal adalah isinya. Untuk NESTA dan GENMATCH, pastikan minimal tiga dari lima baris di bawah ini berbeda.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Aspek</th><th>GENMATCH (Circular Economy &amp; Waste)</th><th>NESTA (Circular Economy)</th></tr></thead>
+    <tbody>
+      <tr><td>Jenis material/limbah</td><td>Contoh: sampah rumah tangga/sekolah</td><td>Contoh: limbah produksi UMKM, tekstil, atau kemasan</td></tr>
+      <tr><td>Titik di rantai</td><td>Sisi konsumsi dan pengelolaan sampah</td><td>Sisi produksi, desain produk, model bisnis</td></tr>
+      <tr><td>Aktor utama</td><td>Warga, sekolah, bank sampah</td><td>Pelaku usaha, koperasi, pemerintah daerah</td></tr>
+      <tr><td>Mekanisme solusi</td><td>Contoh: sistem pilah + insentif</td><td>Contoh: simbiosis industri, sewa/isi ulang, ambil-kembali</td></tr>
+      <tr><td>Lokasi &amp; data</td><td>Satu kota/kecamatan, data timbulan sampah</td><td>Lokasi/sektor lain, data produksi dan nilai ekonomi</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted" style="font-size:14px">Contoh di tabel hanya ilustrasi arah, bukan topik yang harus dipakai. Topiknya kamu tentukan sendiri bersama pembina.</p>
+</section>
+
+<section>
+  <h2>Kerangka presentasi bersama</h2>
+  <p class="lede">Satu urutan untuk semua lomba. Durasi final UISO sudah pasti 15 menit; durasi GENMATCH, EGSA, dan NESTA diumumkan saat TM, jadi siapkan versi 10 menit dan 7 menit.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Slide</th><th>Isi</th><th>15 mnt</th><th>10 mnt</th><th>7 mnt</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Judul</td><td>Nama gagasan, tim, sekolah, subtema</td><td class="num">0:20</td><td class="num">0:15</td><td class="num">0:10</td></tr>
+      <tr><td class="num">2</td><td>Pembuka</td><td>Satu fakta/angka yang membuat juri berhenti</td><td class="num">1:00</td><td class="num">0:45</td><td class="num">0:30</td></tr>
+      <tr><td class="num">3</td><td>Masalah</td><td>Data utama, lokasi, siapa yang terdampak</td><td class="num">2:00</td><td class="num">1:30</td><td class="num">1:00</td></tr>
+      <tr><td class="num">4</td><td>Akar masalah</td><td>Kenapa solusi yang ada belum cukup</td><td class="num">1:30</td><td class="num">1:00</td><td class="num">0:40</td></tr>
+      <tr><td class="num">5</td><td>Gagasan</td><td>Nama inovasi + satu kalimat inti</td><td class="num">1:00</td><td class="num">0:45</td><td class="num">0:30</td></tr>
+      <tr><td class="num">6</td><td>Cara kerja</td><td>Diagram alur langkah demi langkah</td><td class="num">2:30</td><td class="num">1:45</td><td class="num">1:15</td></tr>
+      <tr><td class="num">7</td><td>Keunggulan</td><td>Perbandingan dengan solusi yang sudah ada</td><td class="num">1:30</td><td class="num">1:00</td><td class="num">0:40</td></tr>
+      <tr><td class="num">8</td><td>Implementasi</td><td>Aktor, tahapan, biaya kasar</td><td class="num">2:00</td><td class="num">1:15</td><td class="num">0:50</td></tr>
+      <tr><td class="num">9</td><td>Dampak</td><td>Manfaat terukur + kaitan tema/SDGs</td><td class="num">1:30</td><td class="num">1:00</td><td class="num">0:40</td></tr>
+      <tr><td class="num">10</td><td>Risiko &amp; mitigasi</td><td>Dua risiko terbesar dan jawabannya</td><td class="num">1:00</td><td class="num">0:30</td><td class="num">—</td></tr>
+      <tr><td class="num">11</td><td>Penutup</td><td>Ulang inti gagasan + ajakan</td><td class="num">0:30</td><td class="num">0:20</td><td class="num">0:15</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Latihan presentasi</h2>
+  <div class="two">
+    <div class="box">
+      <h3>Enam latihan, dari ringan ke berat</h3>
+      <ol>
+        <li><b>Pitch 60 detik</b> tanpa slide: masalah, gagasan, dampak. Kalau belum lancar, gagasannya belum jelas.</li>
+        <li><b>Rekam satu kali penuh</b> dengan timer, tonton ulang, tulis tiga perbaikan.</li>
+        <li><b>Potong waktu</b>: bawakan versi 15, lalu 10, lalu 7 menit. Yang bertahan di versi 7 menit adalah inti yang wajib hafal.</li>
+        <li><b>Tanya jawab acak</b>: teman atau pembina menembak 5 pertanyaan; jawab maksimal 60 detik dengan pola Poin → Alasan → Contoh/Data → Poin.</li>
+        <li><b>Gladi daring</b> (GENMATCH, EGSA, NESTA): kamera, mikrofon, share screen, latar, dan PDF cadangan kalau slide macet.</li>
+        <li><b>Gladi luring</b> (UISO): berdiri, kontak mata ke juri, bagi giliran bicara antaranggota tim.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h3>Rubrik final yang paling berat</h3>
+      <ul>
+        <li><span class="tag c-UISO">UISO</span> Pemaparan &amp; kedalaman analisis 30%, tanya jawab 20%, sistematika 20%.</li>
+        <li><span class="tag c-EGSA">EGSA</span> Seleksi esai: argumentasi &amp; analisis data 30%. Rubrik final belum ada di guidebook.</li>
+        <li><span class="tag c-GEN">GENMATCH</span> Orisinalitas, analisis, dan inovasi masing-masing 20%.</li>
+        <li><span class="tag c-NESTA">NESTA</span> Orisinalitas 20%, analisis &amp; argumentasi 20%.</li>
+      </ul>
+      <p class="muted" style="font-size:14px">Artinya untuk semua lomba: data dan logika lebih menentukan daripada desain slide.</p>
+    </div>
+  </div>
+  <div class="box">
+    <h3>Bank pertanyaan juri</h3>
+    <ol class="qs">
+      <li>Apa yang benar-benar baru dari gagasanmu dibanding yang sudah ada?</li>
+      <li>Dari mana datamu, dan apakah mewakili lokasi yang kamu bahas?</li>
+      <li>Berapa biaya awalnya, dan siapa yang membayar?</li>
+      <li>Siapa yang harus bergerak pertama, dan kenapa mereka mau?</li>
+      <li>Apa risiko terbesar gagasan ini? Apa rencana cadangannya?</li>
+      <li>Bagaimana mengukur berhasil atau tidaknya dalam satu tahun?</li>
+      <li>Kalau masyarakat tidak mau ikut, lalu apa?</li>
+      <li>Apa batasan atau kelemahan gagasanmu?</li>
+      <li>Apa peranmu sendiri di gagasan ini sebagai pelajar?</li>
+      <li><b>EGSA:</b> Data spasial apa yang dipakai, dari mana, resolusinya berapa? GeoAI-nya melakukan apa persisnya, dan bagaimana hasilnya diuji?</li>
+      <li><b>GENMATCH:</b> Target SDGs mana yang paling terdampak, dan indikatornya apa?</li>
+      <li><b>NESTA:</b> Di titik mana materialnya "kembali" ke siklus, dan siapa yang mendapat nilai ekonominya?</li>
+      <li><b>UISO:</b> Bagaimana gagasanmu mengubah perilaku konsumen (Target 12.8), bukan hanya mengolah sampahnya (Target 12.5)?</li>
+      <li>Sejauh mana kamu memakai AI dalam menyusun esai ini?</li>
+    </ol>
+  </div>
+</section>
+
+<footer>Disusun dari guidebook resmi keempat lomba (versi yang diunggah 19 Okt 2026). Jadwal panitia bisa berubah; selalu cek ulang Instagram resmi: @uiso.2026, @eic_egsa, @genmatch.id, @nestafest.2026.</footer>
+</div>
+
+<script>
+const TASKS=[
+// w: k=kamu, p=pembina, kp=bersama; c=jika lolos; h=deadline mati
+["w1","2026-10-19","ALL","kp","Kirim halaman ini ke guru pembina dan sepakati jadwal bimbingan B1–B7."],
+["w2","2026-10-19","ALL","k","Cek kalender akademik sekolah (ulangan, ujian akhir semester, libur) dan catat yang bentrok dengan jadwal ini."],
+["w3","2026-10-19","EGSA","p","Bantu akses Turnitin untuk EGSA (paling lambat 26 Okt)."],
+["w4","2026-10-19","EGSA","k","Unduh template cover dan lembar orisinalitas di linktr.ee/EGSAEssayInfographicComp. Siapkan berkas admin dalam PDF: scan kartu pelajar, bukti follow @egsa_ugm dan @eic_egsa, bukti story poster (akun tidak private)."],
+["w5","2026-10-20","EGSA","k","Kunci satu masalah nyata di satu lokasi. Kumpulkan data spasial (mis. BPS, Ina-Geoportal/BIG, BMKG) dan 8–12 referensi kredibel. Tentukan peran GeoAI secara konkret."],
+["w6","2026-10-20","GEN","k","Pilih satu masalah sampah yang spesifik, tentukan target SDGs-nya, buat outline satu halaman."],
+["b1","2026-10-21","ALL","kp","Bimbingan B1: outline EGSA + ide GENMATCH."],
+["w7","2026-10-22","EGSA","k","Tulis draf 1 EGSA (21–23 Okt). Target 6–8 halaman; batasnya maksimal 10."],
+["w8","2026-10-24","EGSA","k","Kirim draf EGSA ke pembina beserta 3 pertanyaan spesifik."],
+["w9","2026-10-25","GEN","k","Tulis draf 1 GENMATCH, 1.000–1.500 kata (24–25 Okt)."],
+["b2","2026-10-26","EGSA","kp","Bimbingan B2: revisi EGSA. Kerjakan revisinya hari itu juga."],
+["w10","2026-10-27","EGSA","k","Cek Turnitin (target ≤10%, batas 15%), tulis ulang bagian yang tinggi. Cek format: TNR 12, spasi 1,5, margin kiri 4 cm lainnya 3 cm, nomor halaman tengah bawah, APA 7, EYD V. Gabungkan cover, lembar orisinalitas, isi, dapus, lampiran Turnitin."],
+["w11","2026-10-27","EGSA","k","Bayar Rp60.000, isi Google Form, unggah semua berkas, lalu konfirmasi via WA: Esai_4_[Tiga Kata Judul]_[Nama Tim]_[Sekolah]."],
+["d1","2026-10-28","EGSA","k","DEADLINE pengumpulan esai EGSA.",0,1],
+["w12","2026-10-28","GEN","k","Kirim draf GENMATCH ke pembina."],
+["b3","2026-10-29","GEN","kp","Bimbingan B3: revisi GENMATCH."],
+["w13","2026-10-29","NESTA","k","Daftar NESTA gelombang 1 (Rp50.000, sampai 31 Okt)."],
+["w14","2026-10-30","GEN","k","Finalisasi GENMATCH, ekspor PDF: NamaTim_AsalSekolah_JudulEsai.pdf, lalu kirim."],
+["d2","2026-10-31","GEN","k","DEADLINE pendaftaran & pengumpulan GENMATCH.",0,1],
+["e1","2026-10-31","UISO","k","Pengumuman finalis UISO (cek @uiso.2026)."],
+["w15","2026-10-31","UISO","kp","Bicarakan dengan orang tua dan pembina: izin, surat dispensasi, biaya daftar ulang Rp125.000, transport/akomodasi ke Depok.",1],
+["w16","2026-11-01","UISO","k","Daftar ulang UISO di uiso.net (batas 3 Nov 23.59).",1],
+["w17","2026-11-01","NESTA","k","Tentukan masalah NESTA yang berbeda dari GENMATCH (lihat tabel \"Beda isi, sama kerangka\"), riset, dan outline."],
+["w18","2026-11-02","UISO","k","Mulai PPT UISO versi 15 menit dengan kerangka bersama. Siapkan file esai UISO sebagai sumber.",1],
+["e2","2026-11-03","GEN","k","Pengumuman finalis GENMATCH."],
+["d3","2026-11-03","UISO","k","Batas daftar ulang UISO, 23.59.",1,1],
+["w19","2026-11-03","GEN","k","Buat deck GENMATCH (versi 10 dan 7 menit) dan bagi bagian bicara ke 2 presenter.",1],
+["b4","2026-11-04","NESTA","kp","Bimbingan B4: outline NESTA, deck GENMATCH, surat dispensasi UISO."],
+["e3","2026-11-04","GEN","k","Technical meeting finalis GENMATCH (daring). Catat durasi presentasi.",1],
+["w20","2026-11-06","NESTA","k","Tulis draf 1 NESTA, 3–5 halaman di luar judul dan dapus (5–6 Nov)."],
+["w21","2026-11-06","GEN","k","Gladi daring GENMATCH: kamera, mikrofon, share screen, PDF cadangan, simulasi tanya jawab.",1],
+["e4","2026-11-07","UISO","k","Technical Meeting 2 UISO via Zoom (wajib). Catat urutan presentasi dan aturan teknis.",1],
+["d4","2026-11-08","GEN","k","Presentasi final GENMATCH (daring).",1,1],
+["w22","2026-11-10","UISO","k","Draf 1 PPT UISO dan naskah 15 menit selesai.",1],
+["w23","2026-11-11","NESTA","k","Kirim draf NESTA dan draf PPT UISO ke pembina."],
+["b5","2026-11-12","NESTA","kp","Bimbingan B5: revisi NESTA + alur slide UISO."],
+["e5","2026-11-13","EGSA","k","Pengumuman finalis EGSA."],
+["w24","2026-11-13","NESTA","k","Cek format NESTA: .docx, TNR 12, judul 14 bold rata tengah, spasi 1,5, margin 4-3-3-3, indentasi 1,25 cm, justify, nama lengkap & sekolah, APA 7. Cek kemiripan."],
+["w25","2026-11-14","NESTA","k","Kirim esai NESTA. Nama file: NAMA TIM_ASALSEKOLAH."],
+["e6","2026-11-14","EGSA","k","Technical meeting final EGSA. Catat durasi presentasi.",1],
+["e7","2026-11-14","GEN","k","Awarding GENMATCH luring di ITS. Konfirmasi ke panitia apakah wajib hadir.",1],
+["d5","2026-11-15","NESTA","k","DEADLINE pengumpulan esai NESTA.",0,1],
+["w26","2026-11-16","EGSA","k","Buat deck EGSA (versi 10 dan 7 menit).",1],
+["w27","2026-11-17","UISO","k","Latihan penuh UISO 15 + 15 menit, direkam, dua kali.",1],
+["b6","2026-11-18","UISO","kp","Bimbingan B6: simulasi juri UISO penuh + jalankan deck EGSA.",1],
+["w28","2026-11-19","UISO","k","Ekspor PPT ke PDF \"Final Esai Gagasan Kreatif_Nama Tim\", cek tiap halaman, unggah sekali di uiso.net.",1],
+["e8","2026-11-19","NESTA","k","Pengumuman finalis NESTA."],
+["d6","2026-11-20","UISO","k","DEADLINE PPT UISO, 23.59.",1,1],
+["w29","2026-11-20","EGSA","k","Gladi daring EGSA di Microsoft Teams.",1],
+["d7","2026-11-21","EGSA","k","Final EGSA (daring, MS Teams).",1,1],
+["e9","2026-11-22","NESTA","k","Technical meeting NESTA. Tanyakan jam presentasi 29 Nov dan minta slot yang tidak bentrok dengan acara UISO.",1],
+["w30","2026-11-23","NESTA","k","Buat deck NESTA dengan kerangka bersama.",1],
+["w31","2026-11-24","UISO","k","Drill tanya jawab cepat: 20 pertanyaan, masing-masing ≤60 detik.",1],
+["b7","2026-11-25","UISO","kp","Bimbingan B7: gladi bersih UISO + NESTA.",1],
+["w32","2026-11-26","UISO","k","Berangkat ke Depok. Bawa seragam putih abu (27), kaus UISO (28), batik (29), kartu pelajar, laptop, charger, hotspot cadangan.",1],
+["d8","2026-11-27","UISO","k","Final UISO, luring FMIPA UI: 15 menit presentasi + 15 menit tanya jawab.",1,1],
+["w33","2026-11-28","NESTA","k","Malam: gladi NESTA daring dari penginapan, cek sinyal.",1],
+["d9","2026-11-29","NESTA","k","Final NESTA (daring) + Grand Closing & Awarding UISO.",1,1]
+];
+const WEEKS=[
+ ["2026-10-19","2026-10-25","Minggu 1","Sprint EGSA"],
+ ["2026-10-26","2026-11-01","Minggu 2","Kirim EGSA & GENMATCH"],
+ ["2026-11-02","2026-11-08","Minggu 3","NESTA + final GENMATCH"],
+ ["2026-11-09","2026-11-15","Minggu 4","Kirim NESTA, siapkan PPT UISO"],
+ ["2026-11-16","2026-11-22","Minggu 5","Kunci PPT UISO, final EGSA"],
+ ["2026-11-23","2026-11-29","Minggu 6","Final UISO & NESTA"]
+];
+const LBL={UISO:"UISO",EGSA:"EGSA",GEN:"GENMATCH",NESTA:"NESTA",ALL:"SEMUA"};
+const WHO={k:"Siswa",p:"Pembina",kp:"Siswa + pembina"};
+const HARI=["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
+const BLN=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+function todayISO(){try{return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Jakarta"}).format(new Date())}catch(e){return new Date().toISOString().slice(0,10)}}
+const TODAY=todayISO();
+function fmt(iso){const [y,m,d]=iso.split("-").map(Number);const dt=new Date(Date.UTC(y,m-1,d));return HARI[dt.getUTCDay()]+" "+d+" "+BLN[m-1]}
+function days(a,b){return Math.round((Date.parse(b)-Date.parse(a))/864e5)}
+
+let done={}; let filter="ALL"; let hideDone=false; let db=null; let canWrite=true;
+const LS="timeline-lomba-esai-2026";
+try{done=JSON.parse(localStorage.getItem(LS)||"{}")||{}}catch(e){done={}}
+function saveLocal(){try{localStorage.setItem(LS,JSON.stringify(done))}catch(e){}}
+
+function render(){
+  const root=document.getElementById("weeks");root.textContent="";
+  WEEKS.forEach(([a,b,name,theme])=>{
+    const items=TASKS.filter(t=>t[1]>=a&&t[1]<=b).filter(t=>{
+      if(hideDone&&done[t[0]])return false;
+      if(filter==="ALL")return true;
+      if(filter==="P")return t[3]!=="k";
+      return t[2]===filter||t[2]==="ALL";
+    });
+    if(!items.length)return;
+    const wk=document.createElement("div");wk.className="week"+(TODAY>=a&&TODAY<=b?" now":"");
+    const hd=document.createElement("div");hd.className="week-head";
+    hd.innerHTML='<span class="eyebrow"></span><h3></h3><span class="mono muted" style="font-size:13px"></span>';
+    hd.children[0].textContent=name;hd.children[1].textContent=theme;hd.children[2].textContent=fmt(a)+" – "+fmt(b);
+    const list=document.createElement("div");list.className="tasks";
+    items.forEach(t=>{
+      const [id,d,l,w,txt,cond,hard]=t;
+      const row=document.createElement("label");
+      row.className="task c-"+l+(hard?" hard":"")+(cond&&!hard?" cond":"")+(done[id]?" done":"")+(d===TODAY?" today":"");
+      const cb=document.createElement("input");cb.type="checkbox";cb.id="t-"+id;cb.checked=!!done[id];cb.disabled=!canWrite;
+      cb.addEventListener("change",()=>toggle(id,cb.checked));
+      const dt=document.createElement("span");dt.className="date";dt.textContent=fmt(d);
+      const body=document.createElement("span");body.className="body";
+      const tx=document.createElement("span");tx.className="txt";tx.textContent=txt;
+      const meta=document.createElement("span");meta.className="meta";
+      const tg=document.createElement("span");tg.className="tag";tg.textContent=LBL[l];meta.appendChild(tg);
+      const wh=document.createElement("span");wh.className="who"+(w!=="k"?" p":"");wh.textContent=WHO[w];meta.appendChild(wh);
+      if(hard){const f=document.createElement("span");f.className="flag h";f.textContent="DEADLINE";meta.appendChild(f)}
+      if(cond){const f=document.createElement("span");f.className="flag c";f.textContent="jika lolos";meta.appendChild(f)}
+      if(!done[id]&&d<TODAY){const f=document.createElement("span");f.className="flag late";f.textContent="lewat";meta.appendChild(f)}
+      body.append(tx,meta);row.append(cb,dt,body);list.appendChild(row);
+    });
+    wk.append(hd,list);root.appendChild(wk);
+  });
+  const n=TASKS.length,k=TASKS.filter(t=>done[t[0]]).length;
+  document.getElementById("prog").textContent=k+" / "+n+" selesai";
+  document.getElementById("progBar").style.width=(n?k/n*100:0)+"%";
+}
+function header(){
+  document.getElementById("today").textContent=fmt(TODAY);
+  const nx=TASKS.filter(t=>t[6]&&t[1]>=TODAY).sort((a,b)=>a[1]<b[1]?-1:1)[0];
+  if(nx){const dd=days(TODAY,nx[1]);document.getElementById("nextDl").textContent=dd===0?"Hari ini":dd+" hari lagi";
+    document.getElementById("nextDlName").textContent=fmt(nx[1])+" · "+nx[4].replace(/^DEADLINE /,"")}
+}
+async function toggle(id,val){
+  done[id]=val; if(!val)delete done[id]; saveLocal(); render();
+  if(db&&canWrite){
+    try{await db.collection("progress").doc(id).set({done:!!val,at:new Date().toISOString()})}
+    catch(e){if(e&&(e.code==="invalid_argument"||e.code==="not_granted")){canWrite=false;setSync("Kamu hanya bisa melihat; centang diatur pemilik halaman.");render()}else setSync("Gagal menyimpan, coba centang lagi sebentar.")}
+  }
+}
+function setSync(s){document.getElementById("sync").textContent=s}
+document.querySelectorAll(".chip[data-f]").forEach(b=>b.addEventListener("click",()=>{
+  filter=b.dataset.f;document.querySelectorAll(".chip[data-f]").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));render()}));
+document.getElementById("hideDone").addEventListener("click",e=>{hideDone=!hideDone;e.currentTarget.setAttribute("aria-pressed",String(hideDone));render()});
+document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",()=>{
+  const el=document.getElementById(b.dataset.copy);const txt=el.textContent;
+  const sel=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+  try{navigator.clipboard.writeText(txt).then(()=>{b.textContent="Tersalin"},sel)}catch(e){sel()}
+}));
+header();render();
+
+(async()=>{
+  try{
+    if(!window.claude||!window.claude.use)return;
+    const d=await window.claude.use("db"); if(!d)return; db=d;
+    const u=await window.claude.use("user");
+    if(u){const c=await u.can("data.write"); if(c===false)canWrite=false}
+    setSync(canWrite?"Centang tersimpan dan terlihat oleh siswa & pembina.":"Mode lihat: progres diperbarui oleh pemilik halaman.");
+    db.collection("progress").onSnapshot(snap=>{
+      const next={};snap.docs.forEach(s=>{const v=s.data();if(v&&v.done)next[s.id]=true});
+      done=next;saveLocal();render();
+    },()=>setSync("Sinkronisasi terputus; centang tetap tersimpan di perangkat ini."));
+  }catch(e){}
+})();
+</script>
+
+</body>
+</html>
